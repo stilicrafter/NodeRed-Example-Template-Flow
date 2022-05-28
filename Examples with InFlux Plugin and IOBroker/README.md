@@ -7,6 +7,7 @@ This folder contains examples with IOBroker and InFlux DB
 This Node-RED Flow allows you to read various values from an IOBroker and pass them as a data set to an InfluxDB. In this example I read various information from an E3DC energystorage, such as PV power and more. After that I can view them in an InfluxDB Gui outside of Node-RED.
 ##### Usage:
 For each ioBroker get Node adjust the Topic. [![Where to click to change Topic](https://raw.githubusercontent.com/stilicrafter/NodeRed-Example-Template-Flow/main/Pictures/Influx-IOBroker/SelectTopic1.jpg "Where to click to change Topic")](https://raw.githubusercontent.com/stilicrafter/NodeRed-Example-Template-Flow/main/Pictures/Influx-IOBroker/SelectTopic1.jpg "Where to click to change Topic")
+
 If you want to add more attributes / rename them, the Variable must also be included in the function.
 
 # Deutsch
