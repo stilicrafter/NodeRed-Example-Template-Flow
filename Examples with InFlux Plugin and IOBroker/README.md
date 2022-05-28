@@ -18,6 +18,7 @@ If you want to add more attributes / rename them, the Variable must also be incl
 Dieser Node-RED Flow ermöglicht es euch, aus einem IOBroker diverse Werte auszulesen, und als ein Datensatz an eine InfluxDB zu übergeben. In diesem Bsp. lese ich verschiedene Infos aus einem E3DC Speicher aus, wie z.b. PV Leistung etc. Danach kann ich diese in einer InfluxDB betrachten.
 ##### Verwendung:
 Bei jeder ioBroker get Node die Topic anpassen.  Ggf. hilft euch dieser Screenshot dabei 😀 [![Where to click to change Topic](https://raw.githubusercontent.com/stilicrafter/NodeRed-Example-Template-Flow/main/Pictures/Influx-IOBroker/SelectTopic1.jpg "Where to click to change Topic")](https://raw.githubusercontent.com/stilicrafter/NodeRed-Example-Template-Flow/main/Pictures/Influx-IOBroker/SelectTopic1.jpg "Where to click to change Topic") 
+
 Wollt ihr noch weitere Attribute / diese umbenennen, muss die Variable auch in der Funktion aufgenommen werden.
 
 
