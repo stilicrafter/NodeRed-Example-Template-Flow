@@ -1,0 +1,209 @@
+[
+    {
+        "id": "c3613cb0.b2d49",
+        "type": "tab",
+        "label": "e3DC to Influx",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6c43cf37.936ad",
+        "type": "inject",
+        "z": "c3613cb0.b2d49",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 180,
+        "wires": [
+            [
+                "24976359.75a35c"
+            ]
+        ]
+    },
+    {
+        "id": "995602f0.af3d9",
+        "type": "debug",
+        "z": "c3613cb0.b2d49",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1530,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "24976359.75a35c",
+        "type": "ioBroker get",
+        "z": "c3613cb0.b2d49",
+        "name": "PVPwr",
+        "topic": "unifi.0.default.devices.78:45:58:8b:de:4b.user-num_sta",
+        "attrname": "PVinWatt",
+        "payloadType": "value",
+        "x": 380,
+        "y": 180,
+        "wires": [
+            [
+                "71f3be7d.242c1"
+            ]
+        ]
+    },
+    {
+        "id": "71f3be7d.242c1",
+        "type": "ioBroker get",
+        "z": "c3613cb0.b2d49",
+        "name": "Netzleistung",
+        "topic": "unifi.0.default.devices.78:45:58:8b:de:4b.user-num_sta",
+        "attrname": "Netzleistung",
+        "payloadType": "value",
+        "x": 520,
+        "y": 180,
+        "wires": [
+            [
+                "70c4704b.d04b1"
+            ]
+        ]
+    },
+    {
+        "id": "70c4704b.d04b1",
+        "type": "ioBroker get",
+        "z": "c3613cb0.b2d49",
+        "name": "BatterieLadeleistung",
+        "topic": "unifi.0.default.devices.78:45:58:8b:de:4b.user-num_sta",
+        "attrname": "BatterieLadeleistung",
+        "payloadType": "value",
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "3aba0405.cadf9c"
+            ]
+        ]
+    },
+    {
+        "id": "48fca494.4dd79c",
+        "type": "ioBroker get",
+        "z": "c3613cb0.b2d49",
+        "name": "BatterieLeistunge3DC",
+        "topic": "unifi.0.default.devices.78:45:58:8b:de:4b.user-num_sta",
+        "attrname": "BatterieLeistunge3DC",
+        "payloadType": "value",
+        "x": 1110,
+        "y": 180,
+        "wires": [
+            [
+                "231cd3bf.c7bebc"
+            ]
+        ]
+    },
+    {
+        "id": "3aba0405.cadf9c",
+        "type": "ioBroker get",
+        "z": "c3613cb0.b2d49",
+        "name": "SOCHausbatterie",
+        "topic": "unifi.0.default.devices.78:45:58:8b:de:4b.user-num_sta",
+        "attrname": "SOCe3DC",
+        "payloadType": "value",
+        "x": 900,
+        "y": 180,
+        "wires": [
+            [
+                "48fca494.4dd79c"
+            ]
+        ]
+    },
+    {
+        "id": "231cd3bf.c7bebc",
+        "type": "function",
+        "z": "c3613cb0.b2d49",
+        "name": "Werte Passend Formatieren",
+        "func": "msg.payload={\n\"PVinWatt\": msg.PVinWatt,\n\"Netzleistung\": msg.Netzleistung,\n\"BatterieLadeleistung\": msg.BatterieLadeleistung,\n\"SOCe3DC\": msg.SOCe3DC,\n\"BatterieLeistunge3DC\": msg.BatterieLeistunge3DC\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1340,
+        "y": 180,
+        "wires": [
+            [
+                "995602f0.af3d9",
+                "68276578.67bf6c"
+            ]
+        ]
+    },
+    {
+        "id": "68276578.67bf6c",
+        "type": "influxdb out",
+        "z": "c3613cb0.b2d49",
+        "influxdb": "f6cf26b1.05e878",
+        "name": "",
+        "measurement": "e3DC",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1610,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "6e0337fe.568158",
+        "type": "comment",
+        "z": "c3613cb0.b2d49",
+        "name": "Doubleclick for info",
+        "info": "### Hi\nThis is an example Flow that allows you to get different values from a PV Battery storage with ACDC Converter like the e3DC System.\nIt gets values from IOBroker. You can set up the ModBus for e3DC as an example.\nYou need to select the right topic regarding you needs and select your own InfluxDB.\n\n\n",
+        "x": 360,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f6cf26b1.05e878",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "2799a1ea.dd209e",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "2799a1ea.dd209e",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false
+    }
+]
